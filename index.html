@@ -844,13 +844,11 @@
     }
     
     try {
-        // 로딩 상태 표시
         const loginBtn = document.querySelector('button[onclick="handleLogin()"]');
         const originalText = loginBtn.textContent;
         loginBtn.textContent = '로그인 중...';
         loginBtn.disabled = true;
         
-        // 여기에 새로운 Apps Script URL을 입력하세요
         const response = await fetch('https://script.google.com/macros/s/AKfycbwMezQeN3g_cLiR5-_9Z_DuD1RiUUl1TK99selzrhCR8NxQ99HH3Yv4egIGXKurb04C/exec', {
             method: 'POST',
             headers: {
@@ -864,38 +862,27 @@
         
         const result = await response.json();
         
-        // 로딩 상태 해제
         loginBtn.textContent = originalText;
         loginBtn.disabled = false;
         
         if (result.success) {
             currentUser = result.user.employeeId;
             
-            // 관리자 권한 확인
             if (result.user.role === 'admin') {
                 isAdmin = true;
                 document.getElementById('adminMode').classList.remove('hidden');
                 document.getElementById('userManagementMenu').classList.remove('hidden');
                 document.getElementById('writeNoticeBtn').classList.remove('hidden');
                 document.getElementById('saveAllBtn').classList.remove('hidden');
-            } else {
-                isAdmin = false;
-                document.getElementById('adminMode').classList.add('hidden');
-                document.getElementById('userManagementMenu').classList.add('hidden');
-                document.getElementById('writeNoticeBtn').classList.add('hidden');
-                document.getElementById('saveAllBtn').classList.add('hidden');
             }
             
-            // 사용자 정보 저장
             window.currentUserData = result.user;
-            
             showScreen('main');
         } else {
             alert(result.message || '로그인에 실패했습니다.');
         }
         
     } catch (error) {
-        // 로딩 상태 해제
         const loginBtn = document.querySelector('button[onclick="handleLogin()"]');
         loginBtn.textContent = '로그인';
         loginBtn.disabled = false;
