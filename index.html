@@ -851,8 +851,7 @@
         loginBtn.disabled = true;
         
         // 여기에 새로운 Apps Script URL을 입력하세요
-        const response = await fetch('https://script.google.com/macros/s/AKfycbwMezQeN3g_cLiR5-_9Z_DuD1RiUUl1TK99selzrhCR8NxQ99HH3Yv4egIGXKurb04C/exec
-', {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbwMezQeN3g_cLiR5-_9Z_DuD1RiUUl1TK99selzrhCR8NxQ99HH3Yv4egIGXKurb04C/exec', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -1368,20 +1367,17 @@
         }
 
         // 내 프로필 모달 열기
-        function openProfileModal() {
-            // 현재 사용자 정보 설정
-            const upperEmployeeId = currentUser.toUpperCase();
-            const isAdminUser = adminAccounts[upperEmployeeId];
-            const userInfo = userData[currentUser] || {};
-            
-            document.getElementById('profileEmployeeId').textContent = currentUser;
-            document.getElementById('profileName').textContent = isAdminUser ? isAdminUser.name : (userInfo.name || '사용자');
-            document.getElementById('profileDepartment').textContent = isAdminUser ? '관리팀' : (userInfo.department || '일반부서');
-            document.getElementById('profileProgress').textContent = isAdminUser ? '100%' : (userInfo.progress ? userInfo.progress + '%' : '0%');
-            document.getElementById('profileScore').textContent = isAdminUser ? '100점' : (userInfo.quizScore ? userInfo.quizScore + '점' : '0점');
-            
-            document.getElementById('profileModal').classList.remove('hidden');
-        }
+function openProfileModal() {
+    const userData = window.currentUserData || {};
+    
+    document.getElementById('profileEmployeeId').textContent = userData.employeeId || currentUser;
+    document.getElementById('profileName').textContent = userData.name || '사용자';
+    document.getElementById('profileDepartment').textContent = userData.department || '부서';
+    document.getElementById('profileProgress').textContent = userData.role === 'admin' ? '100%' : '진행 중';
+    document.getElementById('profileScore').textContent = userData.role === 'admin' ? '100점' : '평가 중';
+    
+    document.getElementById('profileModal').classList.remove('hidden');
+}
 
         // 내 프로필 모달 닫기
         function closeProfileModal() {
