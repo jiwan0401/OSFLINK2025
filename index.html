@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSF Link - 오뚜기SF 품질플랫폼</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #FFFAF0;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 450px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: #E53E3E;
+            border-radius: 50%;
+            margin: 60px auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(229, 62, 62, 0.3);
+        }
+        
+        .logo-text {
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 48px;
+            color: #2D3748;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            font-size: 18px;
+            color: #718096;
+            margin-bottom: 40px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        input {
+            width: 100%;
+            padding: 16px;
+            font-size: 16px;
+            border: 2px solid #E2E8F0;
+            border-radius: 10px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #E53E3E;
+        }
+        
+        button {
+            width: 100%;
+            padding: 16px;
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            background: #E53E3E;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background: #C53030;
+            transform: translateY(-1px);
+        }
+        
+        button:disabled {
+            background: #CBD5E0;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .menu-item {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .menu-item h3 {
+            font-size: 20px;
+            color: #2D3748;
+            margin-bottom: 8px;
+        }
+        
+        .menu-item p {
+            font-size: 14px;
+            color: #718096;
+        }
+        
+        .icon {
+            font-size: 32px;
+            margin-right: 16px;
+            display: inline-block;
+        }
+        
+        .header {
+            background: #E53E3E;
+            color: white;
+            padding: 24px 20px;
+            margin: -20px -20px 30px -20px;
+            border-radius: 0;
+        }
+        
+        .header h2 {
+            font-size: 28px;
+        }
+        
+        .admin-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-top: 8px;
+        }
+        
+        .flex {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logout-btn {
+            background: #E53E3E;
+            color: white;
+        }
+        
+        .logout-btn:hover {
+            background: #C53030;
+        }
+    </style>
+</head>
+<body>
+    <!-- 로그인 화면 -->
+    <div id="loginScreen">
+        <div class="container">
+            <div class="logo">
+                <span class="logo-text">오</span>
+            </div>
+            <h1>OSF Link</h1>
+            <p class="subtitle">오뚜기SF 품질플랫폼</p>
+            
+            <div class="card">
+                <div class="input-group">
+                    <input type="text" id="employeeId" placeholder="사번을 입력하세요" autocomplete="off">
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" placeholder="패스워드를 입력하세요">
+                </div>
+                <button id="loginBtn" onclick="handleLogin()">로그인</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 메인 화면 -->
+    <div id="mainScreen" class="hidden">
+        <div class="header">
+            <div class="container">
+                <h2>OSF Link</h2>
+                <div id="adminBadge" class="admin-badge hidden">⚡ 관리자 모드</div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="menu-item">
+                <div class="flex">
+                    <span class="icon">📚</span>
+                    <div>
+                        <h3>월별교육</h3>
+                        <p>교육과정 및 퀴즈 평가</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="flex">
+                    <span class="icon">📢</span>
+                    <div>
+                        <h3>공지사항</h3>
+                        <p>중요한 알림 및 공지</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="flex">
+                    <span class="icon">💡</span>
+                    <div>
+                        <h3>식품안전 및 품질개선 건의함</h3>
+                        <p>개선사항 제안 및 아이디어</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="flex">
+                    <span class="icon">⚙️</span>
+                    <div>
+                        <h3>설정</h3>
+                        <p>프로필 및 앱 환경설정</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item" id="userManagement" class="hidden">
+                <div class="flex">
+                    <span class="icon">👥</span>
+                    <div>
+                        <h3>사용자 관리</h3>
+                        <p>진도 현황 및 퀴즈 점수 관리 (관리자 전용)</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item logout-btn" onclick="handleLogout()">
+                <div class="flex">
+                    <span class="icon">🚪</span>
+                    <div>
+                        <h3>로그아웃</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ★★★ 여기에 새로운 Apps Script URL을 입력하세요 ★★★
+        const API_URL = 'https://script.google.com/macros/s/AKfycbwMezQeN3g_cLiR5-_9Z_DuD1RiUUl1TK99selzrhCR8NxQ99HH3Yv4egIGXKurb04C/exec';
+        
+        let currentUser = null;
+        let isAdmin = false;
+
+        // 로그인 처리
+        async function handleLogin() {
+            const employeeId = document.getElementById('employeeId').value.trim();
+            const password = document.getElementById('password').value.trim();
+            
+            if (!employeeId || !password) {
+                alert('사번과 패스워드를 모두 입력해주세요.');
+                return;
+            }
+            
+            const btn = document.getElementById('loginBtn');
+            btn.textContent = '로그인 중...';
+            btn.disabled = true;
+            
+            try {
+                const url = API_URL + '?employeeId=' + encodeURIComponent(employeeId) + '&password=' + encodeURIComponent(password);
+                const response = await fetch(url);
+                const result = await response.json();
+                
+                if (result.success) {
+                    currentUser = result.user.employeeId;
+                    isAdmin = result.user.role === 'admin';
+                    
+                    if (isAdmin) {
+                        document.getElementById('adminBadge').classList.remove('hidden');
+                        document.getElementById('userManagement').classList.remove('hidden');
+                    }
+                    
+                    document.getElementById('loginScreen').classList.add('hidden');
+                    document.getElementById('mainScreen').classList.remove('hidden');
+                } else {
+                    alert(result.message || '로그인에 실패했습니다.');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                alert('로그인 중 오류가 발생했습니다. 네트워크를 확인해주세요.');
+            } finally {
+                btn.textContent = '로그인';
+                btn.disabled = false;
+            }
+        }
+
+        // 로그아웃 처리
+        function handleLogout() {
+            currentUser = null;
+            isAdmin = false;
+            
+            document.getElementById('employeeId').value = '';
+            document.getElementById('password').value = '';
+            document.getElementById('adminBadge').classList.add('hidden');
+            document.getElementById('userManagement').classList.add('hidden');
+            
+            document.getElementById('mainScreen').classList.add('hidden');
+            document.getElementById('loginScreen').classList.remove('hidden');
+        }
+
+        // Enter 키 지원
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('password').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    handleLogin();
+                }
+            });
+            
+            document.getElementById('employeeId').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    document.getElementById('password').focus();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
